@@ -1,0 +1,14 @@
+// compileNested: ../../dest/css/$1.css
+//
+* {
+  margin: 0;
+  padding: 0;
+}
+body {
+  //background: black;
+  background: #fff;
+}
+canvas {
+  //margin: 20px auto;
+  display: block;
+}
