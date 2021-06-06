@@ -47,7 +47,7 @@ function onreSizeImg() {
   imgLeterHeight = img_leter.height;
   responsive = true;
   // 背景用の画像をcanvas内に収める
-  resize();
+  resizeBackgeroundImg();
   // 背景用画像の描写
   dispBackgeroundImg();
   // 文字画像を隠すX軸の取得
@@ -57,7 +57,6 @@ function onreSizeImg() {
   if (img_leterCompleteOpenAnimetionFlag) {
     dispLeterImg();
   };
-  console.log("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
 }
 
 
@@ -67,7 +66,7 @@ function init () {
 	canvas.height = windowHeight = window.innerHeight;
   imgLeterWidth = img_leter.width;
   imgLeterHeight = img_leter.height;
-  resize();
+  resizeBackgeroundImg();
   dispBackgeroundImg();
   getXCoordinateImg();
   glitchImg();
@@ -113,11 +112,11 @@ function dispBackgeroundImg() {
 };
 
 /**
- * [resize description]
+ * [resizeBackgeroundImg description]
  * 背景用の画像をcanvas(fillStyle)に収まるようにリサイズする
  * @return {[type]} [description]
  */
-function resize() {
+function resizeBackgeroundImg() {
   // 初回書き込み
   tmpCanvas.width = img_backgeround.naturalWidth;
   tmpCanvas.height = img_backgeround.naturalHeight;
@@ -130,8 +129,32 @@ function resize() {
   //  scale()でも問題ない
   tmpContext.setTransform(scaleWidth, 0, 0, scaleHeight, 0, 0);
   tmpContext.fillStyle = pattern;
+  // canvasの背景に描写
   tmpContext.fillRect(0, 0, tmpCanvas.width * 2, tmpCanvas.height * 2);
 }
+
+/**
+ * [resize description]
+ * 文字用の画像をcanvas(drawImage)に収まるようにリサイズする
+ * 基本 glitch時のレスポンシブに対応する。
+ * @return {[type]} [description]
+ */
+function resizeLeterImg() {
+  getXCoordinateImg();
+  // 初回書き込み
+  const tmpImgCanvas = document.createElement('canvas');
+  const tmpImgContext = tmpImgCanvas.getContext('2d');
+
+  tmpImgCanvas.width = windowWidth;
+  //tmpImgCanvas.width = img_leter.width;
+  tmpImgCanvas.height = img_leter.height;
+  tmpImgContext.fillStyle = "#f2f3e1";
+  // canvasに収まるようにresize
+  tmpImgContext.fillRect(0, 0, tmpImgCanvas.width, tmpImgCanvas.height);
+  tmpImgContext.drawImage(img_leter, 0, 0, imgLeterWidth, imgLeterHeight);
+  return tmpImgCanvas;
+}
+
 
 function glitchImg() {
   // anime
@@ -152,6 +175,11 @@ function glitchImg() {
     autoplay: false,
     loop: false,
   });
+  const anime_ImgLeterHide = anime.timeline({
+    easing: 'easeInOutSine',
+    autoplay: false,
+    loop: false,
+  });
 /****************************************************************/
 /**********************文字表示Animetion*************************/
 /***************************************************************/
@@ -160,7 +188,9 @@ function glitchImg() {
      update: function(anime){
        if ( !responsive) {
          // レスポンシブしていない
-         rectX += imgLeterWidth/9000 * 21.5;
+         // 表示領域のスピードを決めることができる。(後ろの掛け算のほうで)
+         rectX += imgLeterWidth/9000 * 40.5;
+         //rectX += imgLeterWidth/9000 * 50;
          // 全体の何割進んだか比率を求める
          proportion = (rectX - initialX)/imgLeterWidth;
          // どれくらい進むか
@@ -194,49 +224,68 @@ function glitchImg() {
   /****************************************************************/
   /**********************文字のGlitchEffect************************/
   /***************************************************************/
+  let count = 0;
+
   anime_ImgLeterGlitchTL
   .add({
+    duration: 7000,
+    easing: 'easeInQuart',
     update: function(){
-      let glitch1 = {
-        sx: imgLeterWidth*0.5, sy: imgLeterHeight
+      let cleanTiming = 13;
+      let leterImg = resizeLeterImg();
+      count++;
+
+      if ( count % 12 === 0) {
+        for (let i = 0; i < randomInt(1, 11); i++){
+          let sx = randomInt(windowWidth, (-windowWidth));
+          //let sy = randomInt(imgLeterHeight, (-imgLeterHeight));
+
+          let sh = dh = imgLeterHeight/randomInt(2, 7);
+          // x軸の開始位置からx軸の終わり位置まで
+          let dx = randomInt((windowWidth - imgLeterWidth)/2 + imgLeterWidth/2, (windowWidth - imgLeterWidth)/2 - imgLeterWidth/2);
+          // y軸の開始位置からy軸の終わり位置まで
+          let dy = randomInt((windowHeight - imgLeterHeight)/2 + imgLeterHeight/2, (windowHeight - imgLeterHeight)/2 - imgLeterHeight/3);
+          // offset
+          let offset = randomInt(imgLeterHeight, 0);
+          // shとdhは同時に同じ小さい値を指定することで細切れをすることができる。
+          context.drawImage(leterImg, 0, offset, leterImg.width, sh, dx, (windowHeight - imgLeterHeight)/2 + offset, leterImg.width, dh);
+          context.drawImage(leterImg, sx, offset, leterImg.width, sh, dx, (windowHeight - imgLeterHeight)/2 + offset, leterImg.width, dh);
+        }
+      } else if(count % cleanTiming === 11) {
+        cleanTiming = randomInt(8, 16);
+        clear();
+        dispLeterImg();
       }
-
-      let sy = imgLeterHeight;
-
-      console.log('iiiiiiiiiiiiiiiiiiiiiiiiiiiii：' + imgLeterWidth);
-      console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaa：' + imgLeterHeight);
-      context.drawImage(img_leter, 0, 0, imgLeterWidth, imgLeterHeight, (windowWidth - imgLeterWidth)/2, (windowHeight - imgLeterHeight)/2, imgLeterWidth, imgLeterHeight);
-      //context.drawImage(img_leter, imgLeterWidth*50, 10, imgLeterWidth, imgLeterHeight, (windowWidth - imgLeterWidth)/2, (windowHeight - imgLeterHeight)/2, imgLeterWidth, imgLeterHeight);
-    }
-  }, '+= 500')
-  .add({
-    update: function(){
-      //context.drawImage(img_leter, 100, 50, imgLeterWidth, imgLeterHeight-80, (windowWidth - imgLeterWidth)/2, (windowHeight - imgLeterHeight)/2, imgLeterWidth, imgLeterHeight);
-    }
-  })
-  .add({
-    update: function(){
+    },
+    complete: function() {
+      //img_leterCompleteOpenAnimetionFlag = false;
+      anime_ImgLeterHide.play();
       clear();
       dispLeterImg();
+    }
+  }, '+=1300');
+
+  anime_ImgLeterHide
+  .add({
+    duration: 750,
+    complete: function(){
+      clear();
+      img_leterCompleteOpenAnimetionFlag = false;
     }
   });
   anime_ImgLeterOpenTL.play();
 };
 
-
-/*
-function glitchImg() {
-	//for (var i = 0; i < randInt(1, 13); i++) {
-		var x = Math.random() * w;
-		var y = Math.random() * h;
-		var x = Math.random() * 5000;
-		var y = Math.random() * 5000;
-		var spliceWidth = w - x;
-		var spliceHeight = randInt(5, h / 3);
-    context.drawImage(img_leter, 100, 50, img_leter.naturalWidth-100, img_leter.naturalHeight-80, (w - img_leter.naturalWidth)/2, (h - img_leter.naturalHeight)/2, img_leter.naturalWidth, img_leter.naturalHeight);
-    //context.drawImage(img_leter, 0, 0, img_leter.naturalWidth-100, img_leter.naturalHeight-80, (w - img_leter.naturalWidth)/2, (h - img_leter.naturalHeight)/2, img_leter.naturalWidth, img_leter.naturalHeight);
-	//}
-};*/
+/**
+ * [randomInt description]
+ *
+ * @param  {[type]} max [最大値]
+ * @param  {[type]} min [最小値]
+ * @return {[type]}     [description]
+ */
+function randomInt(max, min) {
+  return Math.random() * (max - min) + min;
+}
 
 function clear() {
 	context.rect(0, 0, windowWidth, windowHeight);
