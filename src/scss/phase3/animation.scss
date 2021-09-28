@@ -1,0 +1,50 @@
+// compileNested: ../../../dest/css/phase3/$1.css
+
+.phase3 {
+  height: 100%;
+  &Background {
+    height: 100%;
+  }
+  &Animation {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+  }
+  .phase3_Shrink {
+    &::before {
+      content: "";
+      width: 0vmax;
+      height: 5vmax;
+      position: absolute;
+      background-color: #F6F7F8;
+      animation: Shrink .9s 1.7s linear forwards;
+    }
+    &::after {
+      content: "";
+      width: 0vmax;
+      height: 5vmax;
+      position: absolute;
+      right: 0;
+      background-color: #F6F7F8;
+      animation: Shrink .9s 1.7s linear forwards;
+    }
+    width: 22vmax;
+    height: 5vmax;
+    top: calc((100% - 5vmax) /2 );
+    right: calc((100% - 22vmax) /2);
+    position: absolute;
+    background-image: url(../../img/phase2/letter_next.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
+}
+
+@keyframes Shrink {
+  0% {
+    width: 0vmax;
+  }
+  100% {
+    width: calc(22vmax / 2);
+  }
+}

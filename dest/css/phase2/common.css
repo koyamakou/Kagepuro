@@ -1,0 +1,16 @@
+#root {
+  height: 100%; }
+
+.phase2 {
+  height: 100%; }
+
+#canvas_clip {
+  position: absolute;
+  z-index: 9999; }
+
+.phase2_background {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0; }

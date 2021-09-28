@@ -1,0 +1,56 @@
+// compileNested: ../../../dest/css/phase3/$1.css
+
+
+@mixin diagonalLine {
+  content:"";
+  display: block;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 2px;
+  height: 100%;
+  background: #fff;
+  transform: rotate(46deg)
+}
+
+@mixin leterMenu {
+  display: inline;
+  position: relative;
+  padding:0 25px;
+}
+
+
+
+.phase3 {
+  .leter {
+    width: 100%;
+    position: absolute;
+    bottom: 3.5rem;
+    font-size: 2.5rem;
+    color: #fff;
+    text-align: center;
+    li:nth-child(1) {
+      &::after {@include diagonalLine();}
+      @include leterMenu();
+      a {
+        color: #ffffff;
+        text-decoration: none;
+      }
+    }
+    li:nth-child(2) {
+      &::after {@include diagonalLine();}
+      @include leterMenu();
+      a {
+        color: #ffffff;
+        text-decoration: none;
+      }
+    }
+    li:nth-child(3) {
+      @include leterMenu();
+      a {
+        color: #ffffff;
+        text-decoration: none;
+      }
+    }
+  }
+}

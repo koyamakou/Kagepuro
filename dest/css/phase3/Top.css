@@ -1,0 +1,48 @@
+.phase3 .leter {
+  width: 100%;
+  position: absolute;
+  bottom: 3.5rem;
+  font-size: 2.5rem;
+  color: #fff;
+  text-align: center; }
+  .phase3 .leter li:nth-child(1) {
+    display: inline;
+    position: relative;
+    padding: 0 25px; }
+    .phase3 .leter li:nth-child(1)::after {
+      content: "";
+      display: block;
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 2px;
+      height: 100%;
+      background: #fff;
+      transform: rotate(46deg); }
+    .phase3 .leter li:nth-child(1) a {
+      color: #ffffff;
+      text-decoration: none; }
+  .phase3 .leter li:nth-child(2) {
+    display: inline;
+    position: relative;
+    padding: 0 25px; }
+    .phase3 .leter li:nth-child(2)::after {
+      content: "";
+      display: block;
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 2px;
+      height: 100%;
+      background: #fff;
+      transform: rotate(46deg); }
+    .phase3 .leter li:nth-child(2) a {
+      color: #ffffff;
+      text-decoration: none; }
+  .phase3 .leter li:nth-child(3) {
+    display: inline;
+    position: relative;
+    padding: 0 25px; }
+    .phase3 .leter li:nth-child(3) a {
+      color: #ffffff;
+      text-decoration: none; }

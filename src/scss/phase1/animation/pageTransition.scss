@@ -1,0 +1,57 @@
+// compileNested: ../../../../dest/css/phase1/animation/$1.css
+
+@mixin pageTransition_parent_phase1 (){
+  position:absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+@mixin pageTransition_child_phase1 (){
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom:0;
+  //background-color: #ffffff;
+  background-color: #000000;
+}
+
+[data-phase1 = "wait"], [data-phase1 = "execute"] {
+  @include pageTransition_parent_phase1();
+  &::before {
+    content: '';
+    @include pageTransition_child_phase1();
+    clip-path: inset( 0% 0% 100% 50%);
+  }
+  &::after {
+    content: '';
+    @include pageTransition_child_phase1();
+    clip-path: inset( 100% 50% 0% 0%);
+  }
+}
+
+[data-phase1 = "execute"] {
+  &::before {
+    animation: pageTransitionRignt_phase1 2.2s cubic-bezier(0.445, 0.05, 0.55, 0.95) 0.42s forwards;
+  }
+  &::after {
+    animation: pageTransitionLeft_phase1 2.2s cubic-bezier(0.445, 0.05, 0.55, 0.95) 0.42s forwards;
+  }
+}
+
+
+@keyframes pageTransitionRignt_phase1 {
+  50%,
+  100% {
+    clip-path: inset( 0% 0% 0% 50%);
+  }
+}
+
+@keyframes pageTransitionLeft_phase1 {
+  50%,
+  100% {
+    clip-path: inset( 0% 50% 0% 0%);
+  }
+}

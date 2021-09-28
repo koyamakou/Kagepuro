@@ -1,0 +1,22 @@
+// compileNested: ../../../../dest/css/phase1/common/$1.css
+* {
+  box-sizing: border-box;
+  font-weight: 400;
+  font-style: normal;
+  margin: 0;
+  padding: 0;
+  font-family: 'Noto Serif JP', serif, "游明朝", YuMincho, "ヒラギノ明朝 ProN W3", "Hiragino Mincho ProN";
+  overflow: hidden;
+}
+
+body {
+  overflow: hidden;
+  height: 100%;
+  line-height: 1.5;
+  background: #fff;
+}
+
+html {
+  font-size: 62.5%;
+  height: 100%;
+}

@@ -2,17 +2,21 @@
 <html land = "ja">
 <head>
   <meta charset="utf-8">
-  <title>Test</title>
+  <title>カゲロウプロジェクト</title>
   <meta name = "auther" content = "K×2">
   <meta name = "viewport" content="width=device-width,initial-scale=1.0">
   <meta http-equiv = "Pragma" content="no-cache">
   <meta http-equiv = "Cache-Control" content="no-cache">
   <meta http-equiv = "Expires" content="0">
-  <link rel = "stylesheet" href="./dest/css/GlitchEffect.css">
+  <link rel = "stylesheet" href="./dest/css/style.css">
+  <link rel = "icon" href="./img/favicon.jpg">
   <script src = "./javascript/anime-master/lib/anime.min.js"></script>
 </head>
 <body>
-  <canvas id = "canvas"></canvas>
-  <script type = "text/javascript" src = "./javascript/GlitchEffect/GlitchEffect.js"></script>
+  <div id = "root">
+    <div id = "phase1" data-phase1 = "wait"></div>
+    <canvas id = "canvas"></canvas>
+  </div>
+  <script type = "module" src = "./javascript/dest/module_bundle.js"></script>
 </body>
 </html>
