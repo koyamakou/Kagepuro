@@ -194,7 +194,7 @@ html {
   height: 5vmax;
   position: absolute;
   background-color: #F6F7F8;
-  animation: Shrink .9s 1.7s linear forwards;
+  animation: Shrink .5s 1.7s linear forwards;
 }
 
 .phase3 .phase3_Shrink::after {
@@ -204,7 +204,7 @@ html {
   position: absolute;
   right: 0;
   background-color: #F6F7F8;
-  animation: Shrink .9s 1.7s linear forwards;
+  animation: Shrink .5s 1.7s linear forwards;
 }
 
 @keyframes Shrink {
